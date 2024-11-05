@@ -53,6 +53,7 @@ export default function Heading() {
       } catch (error) {
         dispatch(setLoggedIn(false));
         dispatch(setUsername(""));
+        navigate("/");
       }
     };
     checkLoggedInUser();
