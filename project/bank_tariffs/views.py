@@ -1,7 +1,6 @@
 from django.shortcuts import render
 
 # Create your views here.
-from django.http.response import JsonResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
@@ -45,8 +44,8 @@ class BanksView(APIView):
 
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse("Bank Added Successfully",safe=False)
-        return JsonResponse("Failed to Add Bank", safe=False)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, pk, format=None):
         bank = self.get_bank_by_pk(pk)
@@ -71,12 +70,13 @@ class TariffsView(APIView):
 
     def post(self, request):
         data = request.data
+        print('data',data)
         serializer = Loan_Ser(data=data)
 
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse("Tariff Added Successfully",safe=False)
-        return JsonResponse("Failed to Add Tariff", safe=False)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, entry_id, format=None):
         loan = self.get_loan_by_pk(entry_id)

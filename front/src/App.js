@@ -1,29 +1,23 @@
-import { useState } from "react";
 import { MantineProvider, ColorSchemeProvider } from "@mantine/core";
 import App_Shell from "./constructure/app_shell";
+import Login from "./components/Login";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import { store } from "./rtk/store";
 
 export default function App() {
-  const [colorScheme, setColorScheme] = useState("light");
-  const toggleColorScheme = (value) =>
-    setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
-
   return (
-    <BrowserRouter>
-      <ColorSchemeProvider
-        colorScheme={colorScheme}
-        toggleColorScheme={toggleColorScheme}
-      >
-        <MantineProvider
-          theme={{ colorScheme }}
-          withGlobalStyles
-          withNormalizeCSS
-        >
-          <Routes>
-            <Route path="/*" element={<App_Shell />} />
-          </Routes>
-        </MantineProvider>
-      </ColorSchemeProvider>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <ColorSchemeProvider>
+          <MantineProvider withGlobalStyles withNormalizeCSS>
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route exact path="/*" element={<App_Shell />} />
+            </Routes>
+          </MantineProvider>
+        </ColorSchemeProvider>
+      </BrowserRouter>
+    </Provider>
   );
 }

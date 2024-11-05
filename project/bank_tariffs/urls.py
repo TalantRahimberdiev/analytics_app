@@ -10,7 +10,7 @@ urlpatterns = [
     path('update_bank/<int:pk>/',views.BanksView.as_view()),
     path('delete_bank/<int:pk>/',views.BanksView.as_view()),
 
-    path('create_tariff/',views.TariffsView.as_view()),
+    path('create_tariff_manually/',views.TariffsView.as_view()),
     path('update_tariff/<int:entry_id>/',views.TariffsView.as_view()),
     path('get_tariff_by_entry_id/<int:entry_id>/', views.get_tariff_by_entry_id),
     path('delete_tariff/<int:entry_id>/',views.TariffsView.as_view()),

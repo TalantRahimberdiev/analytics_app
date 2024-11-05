@@ -31,9 +31,17 @@ export default function ListTariffs() {
               color="green"
               variant="light"
               style={{ textDecoration: "underline" }}
-              onClick={() => navigate(`/create_tariff/`)}
+              onClick={() => navigate(`/create_tariff_manually/`)}
             >
-              Create tariff
+              Create tariff manually
+            </Badge>
+            <Badge
+              color="green"
+              variant="light"
+              style={{ textDecoration: "underline" }}
+              onClick={() => navigate(`/create_tariff_by_upload_file/`)}
+            >
+              Create tariff by uploading excel file
             </Badge>
           </Group>
 

@@ -6,7 +6,6 @@ import { useAdd_bankMutation } from "../../rtk/API";
 export default function CreateBank() {
   const navigate = useNavigate();
   const [bankName, setBankName] = useState("");
-  const handleError = () => alert("could not create bank.");
 
   const [addBank] = useAdd_bankMutation();
 
@@ -14,8 +13,7 @@ export default function CreateBank() {
     const task = {
       title: bankName,
     };
-    await addBank(task).catch(handleError);
-    alert("bank was created successfully.");
+    await addBank(task);
   };
 
   return (

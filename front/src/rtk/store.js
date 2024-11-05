@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { API } from "./API";
-import reducer_1 from "./slice_1";
+import burger_reducer from "./burger_slice";
+import authentication_reducer from "./authentication_slice";
 
 export const store = configureStore({
   reducer: {
-    reducer_1: reducer_1,
+    burger: burger_reducer,
+    authentication: authentication_reducer,
     [API.reducerPath]: API.reducer,
   },
   middleware: (getDefaultMiddleware) =>

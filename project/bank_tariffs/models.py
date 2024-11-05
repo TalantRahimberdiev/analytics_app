@@ -7,7 +7,7 @@ class Bank(models.Model):
     title= models.CharField(max_length=500, null=False)
 
     def __str__(self):
-        return self.title
+        return "id: %s, bank: %s" %(self.id,self.title)
 
 class Loan(models.Model):
     entry_id= models.AutoField(primary_key=True)
@@ -18,4 +18,4 @@ class Loan(models.Model):
     entry_date= models.DateField(null=False)
 
     def __str__(self):
-        return self.promo_campaign_name
+        return "entry id:%s, %s" % (self.entry_id, self.promo_campaign_name)

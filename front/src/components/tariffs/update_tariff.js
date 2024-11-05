@@ -13,15 +13,14 @@ import {
   useGet_tariff_by_entry_idQuery,
   useUpdate_tariffMutation,
   useBank_tariffQuery,
-  useBank_tariff_by_pkQuery,
 } from "../../rtk/API";
-import "react-datepicker/dist/react-datepicker.css";
 
 export default function UpdateTariff() {
   const navigate = useNavigate();
   const { pk } = useParams();
   const { entry_id } = useParams();
   const { data } = useBank_tariffQuery();
+  const { refetch } = useGet_tariff_by_entry_idQuery(entry_id);
   const list_select_banks =
     data && data.map((item) => item["id"] + " " + item["title"]);
 
@@ -29,7 +28,8 @@ export default function UpdateTariff() {
 
   const [bank_id, setBank_id] = useState(pk);
   const [title, setTitle] = useState(
-    list_select_banks && list_select_banks.find((item) => parseInt(item) == pk)
+    list_select_banks &&
+      list_select_banks.find((item) => parseInt(item) === parseInt(pk))
   );
   const [interest_rate, setInterest_rate] = useState(null);
   const [promo_campaign_name, setPromo_campaign_name] = useState("");
@@ -48,7 +48,6 @@ export default function UpdateTariff() {
       entry_date,
     };
     await update_tariff(task);
-    alert("tariff was updated.");
   };
 
   useEffect(() => {
@@ -64,6 +63,10 @@ export default function UpdateTariff() {
       (current_tariff.data && current_tariff.data[0]["entry_date"]) || null
     );
   }, [current_tariff]);
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   return (
     <>
@@ -86,7 +89,7 @@ export default function UpdateTariff() {
           value={title}
           defaultValue={
             list_select_banks &&
-            list_select_banks.find((item) => parseInt(item) == pk)
+            list_select_banks.find((item) => parseInt(item) === parseInt(pk))
           }
           data={list_select_banks}
           onChange={(event) => {

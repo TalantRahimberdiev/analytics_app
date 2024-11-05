@@ -9,12 +9,16 @@ import {
   SimpleGrid,
 } from "@mantine/core";
 import { useState } from "react";
-import { useAdd_tariffMutation, useBank_tariffQuery } from "../../rtk/API";
-import "react-datepicker/dist/react-datepicker.css";
+import {
+  useAdd_tariff_manuallyMutation,
+  useBank_tariffQuery,
+} from "../../rtk/API";
 
-export default function CreateTariff() {
+export default function CreateTariffManually() {
   const navigate = useNavigate();
+
   const { data } = useBank_tariffQuery();
+  const [addTariff] = useAdd_tariff_manuallyMutation();
 
   const [bank_id, setBank_id] = useState(null);
   const [title, setTitle] = useState("");
@@ -22,9 +26,6 @@ export default function CreateTariff() {
   const [promo_campaign_name, setPromo_campaign_name] = useState("");
   const [url, setUrl] = useState("");
   const [entry_date, setEntry_date] = useState("");
-
-  const [addTariff] = useAdd_tariffMutation();
-  const handleError = () => alert("could not create tariff.");
 
   const add = async () => {
     const task = {
@@ -34,8 +35,7 @@ export default function CreateTariff() {
       url,
       entry_date,
     };
-    await addTariff(task).catch(handleError);
-    alert("tariff was created successfully.");
+    await addTariff(task);
   };
 
   return (
@@ -45,7 +45,7 @@ export default function CreateTariff() {
         color={"dark"}
         label={
           <Badge color="dark" variant="filled">
-            Create tariff
+            Create tariff manually
           </Badge>
         }
         labelPosition="center"

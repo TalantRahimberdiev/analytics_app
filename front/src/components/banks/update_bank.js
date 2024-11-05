@@ -9,6 +9,8 @@ import {
 export default function UpdateBank() {
   const { pk } = useParams();
   const { data } = useBank_tariff_by_pkQuery(pk);
+  const { refetch } = useBank_tariff_by_pkQuery(pk);
+
   const navigate = useNavigate();
   const [bankName, setBankName] = useState(
     (data && data["loan"][1][0]["title"]) || "title"
@@ -22,12 +24,15 @@ export default function UpdateBank() {
       title: bankName,
     };
     await updateBank(task);
-    alert("bank was updated.");
   };
 
   useEffect(() => {
     setBankName((data && data["loan"][1][0]["title"]) || "");
   }, [data]);
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   return (
     <>

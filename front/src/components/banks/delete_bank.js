@@ -15,11 +15,9 @@ export default function DeleteBank() {
   );
 
   const [deleteBank] = useDelete_bankMutation();
-  const handleError = () => alert("could not delete bank.");
 
   const removeBank = async () => {
-    await deleteBank(pk).catch(handleError);
-    alert("bank removed successfully.");
+    await deleteBank(pk);
   };
 
   useEffect(() => {

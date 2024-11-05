@@ -68,7 +68,6 @@ export default function DeleteTariff() {
           type="submit"
           onClick={() => {
             deleteTariff(entry_id);
-            alert("deleted successfully.");
             navigate(`/bank_tariff/${pk}`);
           }}
         >
