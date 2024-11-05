@@ -10,6 +10,7 @@ import {
   setUsername,
   setLoggedIn,
   setSuccessMessage,
+  setFormData,
 } from "../../rtk/authentication_slice";
 import { useMediaQuery } from "@mantine/hooks";
 import { useSelector, useDispatch } from "react-redux";
@@ -78,6 +79,7 @@ export default function Heading() {
         dispatch(setLoggedIn(false));
         dispatch(setUsername(null));
         dispatch(setSuccessMessage(null));
+        dispatch(setFormData({ email: "", password: "" }));
         console.log("Log out successful!");
         navigate("/");
       }
