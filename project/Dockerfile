@@ -1,0 +1,14 @@
+
+FROM  python:3.13.0-bullseye
+
+# Set environment variables
+ENV PIP_DISABLE_PIP_VERSION_CHECK 1
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+WORKDIR /project
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+# copy from the current directory of the Dockerfile to /api in the image
+COPY . . 
+EXPOSE 8000

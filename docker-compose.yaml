@@ -1,0 +1,41 @@
+services:
+  db:
+    image: postgres
+    container_name: postgres_db
+    env_file: .env
+    restart: always
+    shm_size: 128mb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  adminer:
+    container_name: postgres_UI
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  web:
+    container_name: react_app
+    build: ./front
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./front:/front
+    depends_on:
+      - api
+      
+  api:
+    container_name: django_app
+    build: ./project
+    env_file: .env
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./project:/project
+    command: bash -c "python manage.py runserver 0.0.0.0:8000"
+    depends_on:
+      - db
+
+volumes:
+  pgdata:
