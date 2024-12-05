@@ -6,7 +6,7 @@ ENV PIP_DISABLE_PIP_VERSION_CHECK 1
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-WORKDIR /project
+WORKDIR /backend
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 # copy from the current directory of the Dockerfile to /api in the image

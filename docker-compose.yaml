@@ -9,8 +9,8 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   adminer:
-    container_name: postgres_UI
     image: adminer
+    container_name: postgres_UI
     restart: always
     ports:
       - 8080:8080
@@ -23,19 +23,36 @@ services:
     volumes:
       - ./front:/front
     depends_on:
-      - api
+      - backend
       
-  api:
-    container_name: django_app
-    build: ./project
+  backend:
+    container_name: backend
+    build: ./backend
     env_file: .env
     ports:
       - '8000:8000'
     volumes:
-      - ./project:/project
+      - ./backend:/backend
     command: bash -c "python manage.py runserver 0.0.0.0:8000"
     depends_on:
       - db
 
+  nginx:
+    image: nginx:stable-alpine
+    container_name: nginx
+    networks:
+      - myNetwork
+    volumes:
+      - ./nginx:/nginx
+    ports:
+      - '1337:1337'
+    depends_on:
+      - backend
+
 volumes:
   pgdata:
+
+# создаём сеть.
+networks:
+  myNetwork:
+    driver: bridge
