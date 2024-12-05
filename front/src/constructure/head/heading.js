@@ -5,24 +5,24 @@ import {
   Image,
   Badge,
   Text,
-} from "@mantine/core";
+} from '@mantine/core';
 import {
   setUsername,
   setLoggedIn,
   setSuccessMessage,
   setFormData,
-} from "../../rtk/authentication_slice";
-import { useMediaQuery } from "@mantine/hooks";
-import { useSelector, useDispatch } from "react-redux";
-import { changeBurger } from "../../rtk/burger_slice";
-import { useEffect } from "react";
-import logo from "../../public/logo.png";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+} from '../../rtk/authentication_slice';
+import { useMediaQuery } from '@mantine/hooks';
+import { useSelector, useDispatch } from 'react-redux';
+import { changeBurger } from '../../rtk/burger_slice';
+import { useEffect } from 'react';
+import logo from '../../public/logo.png';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function Heading() {
   const theme = useMantineTheme();
-  const matches = useMediaQuery("(min-width: 700px)");
+  const matches = useMediaQuery('(min-width: 700px)');
   const dispatch = useDispatch();
   const opened = useSelector((state) => state.burger.opened);
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ export default function Heading() {
   useEffect(() => {
     const checkLoggedInUser = async () => {
       try {
-        const token = localStorage.getItem("accessToken");
+        const token = localStorage.getItem('accessToken');
         if (token) {
           const config = {
             headers: {
@@ -41,19 +41,19 @@ export default function Heading() {
             },
           };
           const response = await axios.get(
-            "http://127.0.0.1:8000/api/user/",
-            config
+            'http://127.0.0.1:8000/api/user/',
+            config,
           );
           dispatch(setLoggedIn(true));
           dispatch(setUsername(response.data.username));
         } else {
           dispatch(setLoggedIn(false));
-          dispatch(setUsername(""));
+          dispatch(setUsername(''));
         }
       } catch (error) {
         dispatch(setLoggedIn(false));
-        dispatch(setUsername(""));
-        navigate("/");
+        dispatch(setUsername(''));
+        navigate('/');
       }
     };
     checkLoggedInUser();
@@ -61,8 +61,8 @@ export default function Heading() {
 
   const handleLogout = async () => {
     try {
-      const accessToken = localStorage.getItem("accessToken");
-      const refreshToken = localStorage.getItem("refreshToken");
+      const accessToken = localStorage.getItem('accessToken');
+      const refreshToken = localStorage.getItem('refreshToken');
 
       if (accessToken && refreshToken) {
         const config = {
@@ -71,40 +71,40 @@ export default function Heading() {
           },
         };
         await axios.post(
-          "http://127.0.0.1:8000/api/logout/",
+          'http://127.0.0.1:8000/api/logout/',
           { refresh: refreshToken },
-          config
+          config,
         );
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
         dispatch(setLoggedIn(false));
         dispatch(setUsername(null));
         dispatch(setSuccessMessage(null));
-        dispatch(setFormData({ email: "", password: "" }));
-        console.log("Log out successful!");
-        navigate("/");
+        dispatch(setFormData({ email: '', password: '' }));
+        console.log('Log out successful!');
+        navigate('/');
       }
     } catch (error) {
-      console.error("Failed to logout", error.response?.data || error.message);
+      console.error('Failed to logout', error.response?.data || error.message);
     }
   };
 
   return (
     <div
       style={{
-        display: "flex",
-        alignItems: "center",
-        height: "100%",
-        justifyContent: "space-around",
+        display: 'flex',
+        alignItems: 'center',
+        height: '100%',
+        justifyContent: 'space-around',
       }}
     >
-      <MediaQuery largerThan="sm" styles={{ display: "none" }}>
+      <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
         <Burger
           opened={opened}
           onClick={() => dispatch(changeBurger())}
           size="sm"
           color={theme.colors.gray[6]}
-          mr={"5px"}
+          mr={'5px'}
         />
       </MediaQuery>
 
@@ -113,22 +113,22 @@ export default function Heading() {
       <h4
         style={{
           flexGrow: 8,
-          textAlign: "center",
-          color: "black",
+          textAlign: 'center',
+          color: 'black',
         }}
-        size={"sm"}
+        size={'sm'}
       >
         {matches && `Ввод данных о тарифах конкурентов`}
       </h4>
       {isLoggedIn && (
         <>
-          <Text mr={"md"} fw={500} color={"cyan.9"} size={"sm"}>
+          <Text mr={'md'} fw={500} color={'cyan.9'} size={'sm'}>
             {username}
           </Text>
           <Badge
             color="green"
             variant="light"
-            style={{ textDecoration: "underline" }}
+            style={{ textDecoration: 'underline' }}
             onClick={() => handleLogout()}
           >
             Log out
