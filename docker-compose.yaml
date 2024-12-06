@@ -38,19 +38,19 @@ services:
       - db
 
   nginx:
-    image: nginx:stable-alpine
-    container_name: nginx
-    networks:
-      - myNetwork
-    volumes:
-      - ./nginx:/nginx
+    image: nginx:latest
+    container_name: nginx-server
     ports:
-      - '1337:1337'
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - static_volume:/staticfiles
     depends_on:
       - backend
 
 volumes:
   pgdata:
+  static_volume:
 
 # создаём сеть.
 networks:
