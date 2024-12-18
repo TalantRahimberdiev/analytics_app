@@ -1,0 +1,42 @@
+version: '3.3'
+services:
+  adminer:
+    image: adminer
+    container_name: postgres_UI
+    restart: always
+    ports:
+      - '8080:8080'
+
+  db:
+    image: postgres:13.10
+    container_name: postgres_db
+    env_file: .env
+    restart: always
+    shm_size: 128mb
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    image: analytics_app_backend
+    container_name: django_app
+    env_file: .env
+    ports:
+      - '8000:8000'
+    command: bash -c "python manage.py runserver 0.0.0.0:8000"
+    depends_on:
+      - db
+
+  web:
+    build: ./front
+    image: analytics_app_frontend
+    container_name: react_app
+    ports:
+      - '3000:3000'
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
