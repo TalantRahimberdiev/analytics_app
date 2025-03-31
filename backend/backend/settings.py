@@ -3,7 +3,7 @@ from pathlib import Path
 from datetime import timedelta
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = 'django-insecure-@hz&q$zsper!es=vm*o-2wl7dt*%g#ql30nmzq+6-my1^6v-_@'
+SECRET_KEY = ''
 DEBUG = True
 ALLOWED_HOSTS = ['*']
                           
@@ -56,11 +56,11 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'example',
-        'HOST': 'db',
-        'PORT': '5432',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
     }  
 }
 AUTH_PASSWORD_VALIDATORS = [
@@ -135,5 +135,5 @@ SIMPLE_JWT = {
 CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ORIGIN_WHITELIST=[
-    'http://10.30.18.4:3000'
+    ''
 ]
