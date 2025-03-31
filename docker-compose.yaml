@@ -5,7 +5,7 @@ services:
     container_name: postgres_UI
     restart: always
     ports:
-      - '8080:8080'
+      - ''
 
   db:
     image: postgres:13.10
@@ -14,7 +14,7 @@ services:
     restart: always
     shm_size: 128mb
     ports:
-      - '5432:5432'
+      - ''
     volumes:
       - pgdata:/var/lib/postgresql/data
 
@@ -24,8 +24,8 @@ services:
     container_name: django_app
     env_file: .env
     ports:
-      - '8000:8000'
-    command: bash -c "python manage.py runserver 0.0.0.0:8000"
+      - ''
+    command: bash -c ""
     depends_on:
       - db
 
@@ -34,7 +34,7 @@ services:
     image: analytics_app_frontend
     container_name: react_app
     ports:
-      - '3000:3000'
+      - ''
     depends_on:
       - backend
 
