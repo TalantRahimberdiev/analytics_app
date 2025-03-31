@@ -37,7 +37,7 @@ export default function Login() {
 
     try {
       const response = await axios.post(
-        'http://10.30.18.4:8000/api/login/',
+        '',
         formData,
       );
       dispatch(setSuccessMessage('Login Successful!'));
